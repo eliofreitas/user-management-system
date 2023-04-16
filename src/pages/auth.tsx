@@ -1,17 +1,17 @@
-import { NextPageContext } from 'next'
-import StartingPageContent from '../components/starting-page/starting-page'
+import AuthForm from '../components/auth/auth-form'
 import { getSession } from 'next-auth/react'
 import { GenericJson } from '@/lib/db'
+import { NextPageContext } from 'next'
 
-function HomePage(): JSX.Element {
-  return <StartingPageContent />
+function AuthPage(): JSX.Element {
+  return <AuthForm />
 }
 
 export async function getServerSideProps(context: NextPageContext): Promise<GenericJson> {
   const session = await getSession({ req: context.req })
-  if (!session) {
+  if (session) {
     return {
-      redirect: { destination: '/register', permanent: false }
+      redirect: { destination: '/', permanent: false }
     }
   }
   return {
@@ -19,4 +19,4 @@ export async function getServerSideProps(context: NextPageContext): Promise<Gene
   }
 }
 
-export default HomePage
+export default AuthPage
