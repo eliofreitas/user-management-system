@@ -13,7 +13,6 @@ const RegisterForm = (): JSX.Element => {
       email: values.email,
       password: values.password
     })
-    console.log(result)
     if (!result?.ok) {
       alert(result?.error)
       return

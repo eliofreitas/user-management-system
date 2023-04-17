@@ -11,13 +11,29 @@ import Credentials from 'next-auth/providers/credentials'
 let externalToken = ''
 
 export default NextAuth({
-  session: { strategy: 'jwt' },
+  /** For this use case we could have use an strategy: database which would interact better with reqres.in, but it requires defining a custom adapter */
+  session: { strategy: 'jwt', maxAge: 60 * 60 },
   callbacks: {
-    async session({ session }) {
-      // Persist the OAuth access_token to the token right after signin
+    async session(values) {
+      /* 
+      https://stackoverflow.com/questions/69068495/how-to-get-the-provider-access-token-in-next-auth
+      Next auth v4 changed the way it passes data to the client
+      in here we would query the database to get the token again
+      however https://reqres.in/api-docs/#/ doesn't expose any other way of returning the token so we did this hackish solution 
+      to pass it to the front end
+      */
       //@ts-ignore attaching external token through hacky methods
-      session.externalToken = externalToken
-      return session
+      values.session.externalToken = values.token.accessToken
+      return values.session
+    },
+    async jwt(values) {
+      // Persist the OAuth access_token and or the user id to the token right after signin
+      if (values.account) {
+        values.token.accessToken = externalToken
+        //@ts-ignore the result does not return the email
+        values.token.id = values?.profile?.id
+      }
+      return values.token
     }
   },
   providers: [
@@ -26,7 +42,8 @@ export default NextAuth({
       authorize: async (credentials) => {
         const result = await loginUser({ ...credentials })
         externalToken = result.token
-        /* according to https://next-auth.js.org/providers/credentials 
+        /* according to https://next-auth.js.org/providers/credentials
+         https://stackoverflow.com/questions/69566225/nextauth-credentials-adding-more-to-the-user-scheme
             "Any object returned will be saved in `user` property of the JWT"
             However, in practice this doesn't seem to be working the user property doesnt contain any other value
             apart from email, username and image which correspond to the default user
@@ -36,7 +53,9 @@ export default NextAuth({
           email: credentials?.email,
           token: result.token
         } as unknown as User
-        return user
+        return {
+          ...user
+        }
       }
     })
   ]
