@@ -4,13 +4,14 @@ import MainNavigation from './main-navigation'
 
 export interface LayoutProps {
   children: JSX.Element
+  toggleTheme: () => void
+  currentTheme?: 'light' | 'dark'
 }
 
-const Layout = (props: LayoutProps): JSX.Element => {
-  const { children } = props
+const Layout = ({ children, toggleTheme, currentTheme }: LayoutProps): JSX.Element => {
   return (
     <Fragment>
-      <MainNavigation />
+      <MainNavigation toggleTheme={toggleTheme} currentTheme={currentTheme} />
       <main>{children}</main>
     </Fragment>
   )

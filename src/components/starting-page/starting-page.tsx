@@ -83,7 +83,6 @@ const StartingPageContent = (): JSX.Element => {
   const disabledPrevious = noData || currentPage === 1
   const userToUpdate =
     currentDialog === 'Update' ? simulatedData.find((d) => d.id === userIdToUpdate) : undefined
-  console.log(userToUpdate)
   return (
     <section>
       <h1>Welcome on Board!</h1>
