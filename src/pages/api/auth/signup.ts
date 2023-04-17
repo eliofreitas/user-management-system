@@ -12,6 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
     return
   }
   try {
+    console.log(data)
     await createUser(data, EXTERNAL_API)
   } catch (error) {
     res.status(422).json({ message: 'Something went wrong' })

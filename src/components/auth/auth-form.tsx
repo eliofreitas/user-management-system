@@ -1,12 +1,12 @@
 import { Typography } from '@mui/material'
-import { MockUser } from '@/lib/db'
+import { MockUserCredentials } from '@/lib/db'
 import UserForm from '../userForm/user-form'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 
 const RegisterForm = (): JSX.Element => {
   const router = useRouter()
-  const submitHandler = async (values: Partial<MockUser>): Promise<void> => {
+  const submitHandler = async (values: Partial<MockUserCredentials>): Promise<void> => {
     const home = '/'
     const result = await signIn('credentials', {
       redirect: false,
@@ -23,7 +23,7 @@ const RegisterForm = (): JSX.Element => {
   return (
     <section>
       <Typography variant="h1">Login</Typography>
-      <UserForm onSubmit={submitHandler} submitLabel="Login" />
+      <UserForm onSubmit={submitHandler} submitLabel="Login" type="Login" />
     </section>
   )
 }

@@ -9,7 +9,7 @@ import Credentials from 'next-auth/providers/credentials'
  * to be included in future request
  */
 let externalToken = ''
-
+const LOGIN_API = 'https://reqres.in/api/login'
 export default NextAuth({
   /** For this use case we could have use an strategy: database which would interact better with reqres.in, but it requires defining a custom adapter */
   session: { strategy: 'jwt', maxAge: 60 * 60 },
@@ -40,7 +40,7 @@ export default NextAuth({
     Credentials({
       credentials: {},
       authorize: async (credentials) => {
-        const result = await loginUser({ ...credentials })
+        const result = await loginUser({ ...credentials }, LOGIN_API)
         externalToken = result.token
         /* according to https://next-auth.js.org/providers/credentials
          https://stackoverflow.com/questions/69566225/nextauth-credentials-adding-more-to-the-user-scheme
