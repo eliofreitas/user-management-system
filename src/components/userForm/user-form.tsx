@@ -80,15 +80,7 @@ const UserForm = ({
         setSubmitting(false)
       }}
     >
-      {({
-        submitForm,
-        isSubmitting,
-        touched,
-        errors,
-        isValid,
-        dirty,
-        initialValues
-      }): JSX.Element => {
+      {({ submitForm, isSubmitting, touched, errors, isValid, dirty }): JSX.Element => {
         return (
           <Form>
             <Box margin={1}>
@@ -128,7 +120,7 @@ const UserForm = ({
               <Box margin={1}>
                 <Field
                   component={TextField}
-                  type="text"
+                  type="password"
                   label="Confirm Password"
                   name="passwordConfirmation"
                   error={touched['passwordConfirmation'] && !!errors['passwordConfirmation']}
