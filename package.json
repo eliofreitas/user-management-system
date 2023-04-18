@@ -8,7 +8,11 @@
     "prod": "next start",
     "dev:up": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up",
     "prod:up": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cy:open-only": "cypress open",
+    "cy:run-only": "cypress run",
+    "test:dev": "start-server-and-test dev 3000 cy:open-only",
+    "test": "start-server-and-test dev 3000 cy:run-only"
   },
   "dependencies": {
     "@emotion/babel-preset-css-prop": "^11.10.0",
@@ -39,12 +43,14 @@
     "@types/react-dom": "18.0.11",
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",
+    "cypress": "^12.10.0",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "prettier": "^2.8.7",
+    "start-server-and-test": "^2.0.0",
     "typescript": "5.0.4"
   }
 }
