@@ -34,7 +34,7 @@ describe('Login Functionality', () => {
 
   it('should not allow login with non-existent values', () => {
     cy.visit(AUTH_PAGE_URL)
-    cy.get(`input[name="${EMAIL_INPUT_NAME}"]`).type('eve.holt@reqres.in')
+    cy.get(`input[name="${EMAIL_INPUT_NAME}"]`).type('eve.holt@reqres.inf')
     cy.get(`input[name="${PASSWORD_INPUT_NAME}"]`).type('gun')
     cy.contains('button', LOGIN_BUTTON_TEXT).click()
     cy.url().should('eq', AUTH_PAGE_URL)

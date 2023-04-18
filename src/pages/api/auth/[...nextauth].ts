@@ -40,6 +40,7 @@ export default NextAuth({
     Credentials({
       credentials: {},
       authorize: async (credentials) => {
+        console.log(credentials)
         const result = await loginUser({ ...credentials }, LOGIN_API)
         externalToken = result.token
         /* according to https://next-auth.js.org/providers/credentials
