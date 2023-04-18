@@ -7,14 +7,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
     res.status(400).json({ message: 'Something went wrong' })
     return
   }
-  const { page, per_page, externalToken } = req.query
+  const externalToken = req.headers.authorization
+  const token = externalToken?.trim().replace(/^Bearer\s+/i, '')
+  const { page, per_page } = req.query
   try {
-    const response = await getUsers(
-      EXTERNAL_API,
-      Number(page),
-      Number(per_page),
-      externalToken as string
-    )
+    const response = await getUsers(EXTERNAL_API, Number(page), Number(per_page), token as string)
     res.status(200).json({ response })
   } catch (error) {
     res.status(422).json({ message: 'Something went wrong' })

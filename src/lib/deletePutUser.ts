@@ -6,10 +6,12 @@ const commonCaller = async (
   id: number,
   externalToken?: string
 ): Promise<GenericJson> => {
-  const queryString = `token=${externalToken}`
-  const finalUrl = `${url}/${id}?${queryString}`
-  console.log(finalUrl)
-  const response = await fetch(finalUrl, { method: method })
+  const headers = new Headers()
+  if (externalToken) {
+    headers.set('Authorization', `Bearer ${externalToken}`)
+  }
+  const finalUrl = `${url}/${id}`
+  const response = await fetch(finalUrl, { method: method, headers: headers })
   if (!response.ok) throw new Error('Something went wrong!')
   return { message: 'Success' }
 }

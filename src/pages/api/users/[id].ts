@@ -7,7 +7,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
    * These endpoints are only for simulation purposes because the server does nothing
    */
   if (req.method === 'DELETE') {
-    const { id, token } = req.query
+    const externalToken = req.headers.authorization
+    const token = externalToken?.trim().replace(/^Bearer\s+/i, '')
+    const { id } = req.query
     try {
       const response = await deleteUser(EXTERNAL_API, Number(id), token as string)
       res.status(200).json({ ...response })
@@ -17,7 +19,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
     return
   }
   if (req.method === 'PUT') {
-    const { id, token } = req.query
+    const externalToken = req.headers.authorization
+    const token = externalToken?.trim().replace(/^Bearer\s+/i, '')
+    const { id } = req.query
     try {
       const response = await updateUser(EXTERNAL_API, Number(id), token as string)
       res.status(200).json({ ...response })

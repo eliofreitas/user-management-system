@@ -6,9 +6,13 @@ const getUsers = async (
   perPage: number,
   externalToken?: string
 ): Promise<ServerResponse> => {
-  const queryString = `page=${page}&per_page=${perPage}&token=${externalToken}`
+  const headers = new Headers()
+  if (externalToken) {
+    headers.set('Authorization', `Bearer ${externalToken}`)
+  }
+  const queryString = `page=${page}&per_page=${perPage}`
   const finalUrl = `${url}?${queryString}`
-  const response = await fetch(finalUrl)
+  const response = await fetch(finalUrl, { headers })
   const data = await response.json()
   if (!response.ok) throw new Error(data.message || 'Something went wrong!')
   return data
