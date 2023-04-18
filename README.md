@@ -6,7 +6,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-You must have installed previously [Docker](https://docs.docker.com/install/) and [Node v18](https://docs.docker.com/install/)
+You must have installed previously [Docker](https://docs.docker.com/install/) and [Node v18](https://nodejs.org/en/)
 To run this project go to the root folder and run if running for the first time
 
 ```
@@ -65,6 +65,8 @@ To run this you require to install docker and docker compose
 
 - User: eve.holt@reqres.in
 - Pass: pistol
+
+Note: for login the backend seems to be ignoring the password check, only checks for the user name.
 
 ## Learn More
 
